@@ -1,22 +1,46 @@
 class RestaurantsController < ApplicationController
+  before_action :set_restaurant, only: [:show,:edit,:update,:destroy]
+
   def index
     @restaurants = Restaurant.all
   end
+
   def show
-    id = params[:id]
-    @restaurant = Restaurant.find(id)
   end
+
   def new
+    @restaurant = Restaurant.new
     #actions to display the form to create data
   end
   def create
-    name_rest = params[:restaurant_name]
-    address_rest = params[:restaurant_address]
-    stars_rest = params[:restaurant_stars].to_i
-    rest = Restaurant.new(name: name_rest, address: address_rest, stars: stars_rest)
-    rest.save
 
+    rest = Restaurant.new(restaurants_params)
+    rest.save
     redirect_to "/restaurants"
     #Actions to create
+  end
+
+  def edit
+  end
+  def update
+      @restaurant.update(restaurants_params)
+      redirect_to "/restaurants"
+  end
+
+  def destroy
+    @restaurant.destroy
+
+    redirect_to "/restaurants"
+  end
+
+  private
+
+  def restaurants_params
+    params.require(:restaurant).permit(:name,:address,:stars)
+  end
+
+
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:id].to_i)
   end
 end

@@ -1,6 +1,6 @@
 <h1>HEllo to my restaurant</h1>
 <ul>
     <% @restaurants.each do |restaurant| %>
-      <li> <%= restaurant.name %></li>
+      <li> <%= link_to restaurant.name, restaurant_path(restaurant) %> - <%= link_to "destroy", restaurant_path(restaurant),method: :delete %></li>
     <% end %>
 </ul>
